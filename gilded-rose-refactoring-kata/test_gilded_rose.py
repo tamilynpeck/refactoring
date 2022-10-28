@@ -70,13 +70,13 @@ def test_quality_goes_up_by_three_for_backstage_passes_with_5_days_or_less_left(
     assert item.sell_in == expected["sell_in"]
 
 
-def test_quality_and_sellin_decrease_twice_as_fast_after_sell_by():
+def test_quality_decrease_twice_as_fast_after_sell_by():
     gilded_rose = GildedRose(
         [Item("+5 Dexterity Vest", 0, 20), Item("Conjured Mana Cake", 0, 6)]
     )
     expected = [
         {"sell_in": -1, "quality": 18},
-        {"sell_in": -1, "quality": 4},
+        {"sell_in": -1, "quality": 2},
     ]
 
     gilded_rose.update_quality()
@@ -115,19 +115,26 @@ def test_sulfuras_the_immutable():
 
 def test_quality_does_not_increase_past_50():
     gilded_rose = GildedRose([Item("Aged Brie", 4, 49)])
+
     expected = {"sell_in": 3, "quality": 50}
 
     gilded_rose.update_quality()
+    item = gilded_rose.items[0]
+    assert item.quality == expected["quality"]
+    assert item.sell_in == expected["sell_in"]
 
+    expected = {"sell_in": 2, "quality": 50}
+
+    gilded_rose.update_quality()
     item = gilded_rose.items[0]
     assert item.quality == expected["quality"]
     assert item.sell_in == expected["sell_in"]
 
 
-@pytest.mark.skip(reason="new feature")
+# @pytest.mark.skip(reason="new feature")
 def test_conjured_items_decrease_in_quality_twice_as_fast():
     gilded_rose = GildedRose([Item("Conjured Mana Cake", 3, 6)])
-    expected = {"sell_in": 2, "quality": 2}
+    expected = {"sell_in": 2, "quality": 4}
 
     gilded_rose.update_quality()
 
