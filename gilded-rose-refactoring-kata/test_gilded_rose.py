@@ -72,11 +72,11 @@ def test_quality_goes_up_by_three_for_backstage_passes_with_5_days_or_less_left(
 
 def test_quality_decrease_twice_as_fast_after_sell_by():
     gilded_rose = GildedRose(
-        [Item("+5 Dexterity Vest", 0, 20), Item("Conjured Mana Cake", 0, 6)]
+        [Item("+5 Dexterity Vest", 0, 20), Item("Mana Cake", 0, 6)]
     )
     expected = [
         {"sell_in": -1, "quality": 18},
-        {"sell_in": -1, "quality": 2},
+        {"sell_in": -1, "quality": 4},
     ]
 
     gilded_rose.update_quality()
@@ -126,18 +126,6 @@ def test_quality_does_not_increase_past_50():
     expected = {"sell_in": 2, "quality": 50}
 
     gilded_rose.update_quality()
-    item = gilded_rose.items[0]
-    assert item.quality == expected["quality"]
-    assert item.sell_in == expected["sell_in"]
-
-
-# @pytest.mark.skip(reason="new feature")
-def test_conjured_items_decrease_in_quality_twice_as_fast():
-    gilded_rose = GildedRose([Item("Conjured Mana Cake", 3, 6)])
-    expected = {"sell_in": 2, "quality": 4}
-
-    gilded_rose.update_quality()
-
     item = gilded_rose.items[0]
     assert item.quality == expected["quality"]
     assert item.sell_in == expected["sell_in"]
