@@ -29,27 +29,3 @@ We have recently signed a supplier of conjured items. This requires an update to
 
 Feel free to make any changes to the UpdateQuality method and add any new code as long as everything still works correctly.
 However, do not alter the Item class or Items property (you can make the UpdateQuality method and Items property static if you like).
-
----
-
-## My Refactorings
-
-- Extract Function:
-
-  `def change_quality(self, item, amount=-1)`
-
-- Inline Function??
-
-  `if not GildedRose.is_sulfras(item):`
-
-- combine if's?
-- guard clause refactor?
-
-- Replace Nested Conditional with Guard Clauses
-
-  `if GildedRose.is_sulfras(item): return`
-
-- something readability
-  item.quality = item.quality - item.quality
-  to
-  item.quality = 0
